@@ -1,0 +1,10 @@
+prefix=@LIB_BUDDY_PC_PREFIX@
+exec_prefix=${prefix}
+libdir=@LIB_BUDDY_PC_LIBDIR@
+includedir=@LIB_BUDDY_PC_INCLUDEDIR@
+
+Name: lib-buddy
+Description: C library for manage i-Buddy devices
+Version: @LIB_BUDDY_PC_VERSION@
+Libs: -L${libdir} @LIB_BUDDY_PC_LIBS@
+Cflags: -I${includedir} @LIB_BUDDY_PC_CFLAGS@
