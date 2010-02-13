@@ -20,20 +20,34 @@
  *      MA 02110-1301, USA.
  */
 
+/**
+ * @file buddy.h
+ * @brief Main header file for lib-buddy.
+ */
+
 #ifndef BUDDY_H
 #define BUDDY_H 1
 
+/**
+ * Array of I-Buddy devices.
+ */
 typedef struct buddy{
 	struct usb_device *dev;
 	struct usb_dev_handle *udev;
 	struct buddy *next;
 }buddy;
 
+/**
+ * Define the state of the heart.
+ */
 enum heart{
 	HEART_OFF,
 	HEART_ON
 };
 
+/**
+ * Defines the color of the light.
+ */
 enum light{
 	LIGHT_OFF,
 	LIGHT_RED,
@@ -45,29 +59,83 @@ enum light{
 	LIGHT_WHITE
 };
 
+/**
+ * Defines the position of the wings.
+ */
 enum wing{
 	WING_DOWN = 1,
 	WING_UP = 2
 };
 
+/**
+ * Defines the position of the boddy.
+ */
 enum body{
 	BODY_RIGHT = 1,
 	BODY_LEFT = 2
 };
 
+/**
+ * Allocate and init a buddy array. The buddy array holds usb information
+ * of all I-Buddy devices. You need to activate the devices you want to work.
+ *
+ * @see buddy_free
+ */
 struct buddy * buddy_init();
 
+/**
+ * Count the number of I-Buddy devices on a buddy array.
+ *
+ * @param bd Buddy array.
+ * @return Number of devices.
+ */
 int buddy_count(struct buddy *bd);
 
+/**
+ * Enables all devices specified in the buddy array.
+ *
+ * @param bd Buddy array.
+ */
 void buddy_activate_all(struct buddy *bd);
+
+/**
+ * Enables a device specified.
+ *
+ * @param bd Buddy.
+ */
 void buddy_activate(struct buddy *bd);
 
+/**
+ * Change the state of the actived i-Buddy devices specified on buddy array.
+ *
+ * @param bd Buddy array.
+ * @param h State of the heart.
+ * @param l Color of the light.
+ * @param w Position of the wings.
+ * @param b Position of the boddy.
+ */
 void buddy_state(struct buddy *bd,
 		enum heart h, enum light l, enum wing w, enum body b);
 
+/**
+ * Disable a devices specified.
+ *
+ * @param bd Buddy.
+ */
 void buddy_deactivate(struct buddy *bd);
+
+/**
+ * Disable all devices specified in the buddy array.
+ *
+ * @param bd Buddy array.
+ */
 void buddy_deactivate_all(struct buddy *bd);
 
+/**
+ * Completely free resources allocated of a buddy array.
+ *
+ * @param bd Buddy array.
+ */
 void buddy_free(struct buddy *bd);
 
 #endif
