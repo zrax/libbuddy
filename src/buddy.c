@@ -1,19 +1,19 @@
 /* vim: set sts=4 sw=4 noet : */
 
 /*      buddy.c
- *      
+ *
  *      Copyright 2010 Francesc Gordillo <frangor+dev@gmail.com>
- *      
+ *
  *      This program is free software; you can redistribute it and/or modify
  *      it under the terms of the GNU General Public License as published by
  *      the Free Software Foundation; either version 2 of the License, or
  *      (at your option) any later version.
- *      
+ *
  *      This program is distributed in the hope that it will be useful,
  *      but WITHOUT ANY WARRANTY; without even the implied warranty of
  *      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *      GNU General Public License for more details.
- *      
+ *
  *      You should have received a copy of the GNU General Public License
  *      along with this program; if not, write to the Free Software
  *      Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
@@ -100,9 +100,9 @@ void buddy_activate(struct buddy *bd)
 	usb_detach_kernel_driver_np(bd->udev, 0);
 	usb_detach_kernel_driver_np(bd->udev, 1);
 	usb_set_configuration(bd->udev, bd->dev->config->bConfigurationValue);
-	usb_claim_interface(bd->udev, 
+	usb_claim_interface(bd->udev,
 			bd->dev->config->interface->altsetting->bInterfaceNumber);
-	usb_set_altinterface(bd->udev, 
+	usb_set_altinterface(bd->udev,
 			bd->dev->config->interface->altsetting->bAlternateSetting);
 }
 
