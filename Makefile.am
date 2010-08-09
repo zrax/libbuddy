@@ -4,4 +4,4 @@ CLEANFILES = *~
 
 MAINTAINERCLEANFILES = Makefile.in configure config/* aclocal.m4 \
 					   config.h config.h.in INSTALL COPYING libtool
-SUBDIRS = src pkg-config doc
+SUBDIRS = src pkg-config
