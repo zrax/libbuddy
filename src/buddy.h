@@ -22,7 +22,7 @@
 
 /**
  * @file buddy.h
- * @brief Main header file for lib-buddy.
+ * @brief Main header file for libbuddy.
  */
 
 #ifndef BUDDY_H

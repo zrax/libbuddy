@@ -1,15 +1,15 @@
-MAINTAINERCLEANFILES = Makefile.in lib-buddy.pc
+MAINTAINERCLEANFILES = Makefile.in libbuddy.pc
 pkgconfigdir = $(libdir)/pkgconfig/
-pkgconfig_DATA = lib-buddy.pc
-EXTRA_DIST = lib-buddy.pc.in
-CLEANFILES = lib-buddy.pc
+pkgconfig_DATA = libbuddy.pc
+EXTRA_DIST = libbuddy.pc.in
+CLEANFILES = libbuddy.pc
 
-lib-buddy.pc : lib-buddy.pc.in Makefile
+libbuddy.pc : libbuddy.pc.in Makefile
 	sed \
-		-e "s:[@]LIB_BUDDY_PC_PREFIX@:$(prefix):" \
-		-e "s:[@]LIB_BUDDY_PC_LIBDIR@:$(libdir):" \
-		-e "s:[@]LIB_BUDDY_PC_INCLUDEDIR@:$(includedir)/lib-buddy-$(LIB_BUDDY_PC_SLOT):" \
-		-e "s:[@]LIB_BUDDY_PC_VERSION@:$(LIB_BUDDY_PC_VERSION):" \
-		-e "s:[@]LIB_BUDDY_PC_LIBS@:$(LIB_BUDDY_PC_LIBS):" \
-		-e "s:[@]LIB_BUDDY_PC_CFLAGS@:$(LIB_BUDDY_PC_CFLAGS):" \
-		< $(srcdir)/lib-buddy.pc.in > lib-buddy.pc
+		-e "s:[@]LIBBUDDY_PC_PREFIX@:$(prefix):" \
+		-e "s:[@]LIBBUDDY_PC_LIBDIR@:$(libdir):" \
+		-e "s:[@]LIBBUDDY_PC_INCLUDEDIR@:$(includedir)/libbuddy-$(LIBBUDDY_PC_SLOT):" \
+		-e "s:[@]LIBBUDDY_PC_VERSION@:$(LIBBUDDY_PC_VERSION):" \
+		-e "s:[@]LIBBUDDY_PC_LIBS@:$(LIBBUDDY_PC_LIBS):" \
+		-e "s:[@]LIBBUDDY_PC_CFLAGS@:$(LIBBUDDY_PC_CFLAGS):" \
+		< $(srcdir)/libbuddy.pc.in > libbuddy.pc
