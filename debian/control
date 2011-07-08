@@ -11,13 +11,13 @@ Homepage: http://frangor.github.com/libbuddy/
 Package: libbuddy-dev
 Section: libdevel
 Architecture: any
-Depends: libbuddy (= ${binary:Version}), libusb-1.0-0
+Depends: libbuddy (= ${binary:Version}), libusb-dev
 Description: C library for manage i-Buddy devices.
  C library for manage i-Buddy devices.
 
 Package: libbuddy
 Section: libs
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}
+Depends: ${shlibs:Depends}, ${misc:Depends}, libusb
 Description: C library for manage i-Buddy devices.
  C library for manage i-Buddy devices.
