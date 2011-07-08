@@ -1,4 +1,4 @@
-EXTRA_DIST = autogen.bash doxygen.cfg doc/html
+EXTRA_DIST = doxygen.cfg doc/html
 
 CLEANFILES = *~
 
