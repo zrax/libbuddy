@@ -1,9 +1,10 @@
-EXTRA_DIST = autogen.bash
+EXTRA_DIST = autogen.bash doxygen.cfg doc/html
 
 CLEANFILES = *~
 
 MAINTAINERCLEANFILES = Makefile.in configure config/* aclocal.m4 \
 					   config.h config.h.in INSTALL COPYING libtool
-EXTRA_DIST = doxygen.cfg
+
+include aminclude.am
 
 SUBDIRS = src pkg-config
