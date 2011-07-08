@@ -1,0 +1,23 @@
+Source: libbuddy
+Priority: extra
+Maintainer: Francesc Gordillo <frangor@gmail.com>
+Build-Depends: debhelper (>= 7.0.50~), autotools-dev, libusb-1.0-0-dev
+Standards-Version: 3.8.4
+Section: libs
+Homepage: http://frangor.github.com/libbuddy/
+#Vcs-Git: git://git.debian.org/collab-maint/libbuddy.git
+#Vcs-Browser: http://git.debian.org/?p=collab-maint/libbuddy.git;a=summary
+
+Package: libbuddy-dev
+Section: libdevel
+Architecture: any
+Depends: libbuddy (= ${binary:Version}), libusb-1.0-0
+Description: C library for manage i-Buddy devices.
+ C library for manage i-Buddy devices.
+
+Package: libbuddy
+Section: libs
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: C library for manage i-Buddy devices.
+ C library for manage i-Buddy devices.
