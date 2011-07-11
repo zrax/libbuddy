@@ -1,3 +1,9 @@
+libbuddy (0.1.1-1) unstable; urgency=low
+
+  * Upstream release
+
+ -- Francesc Gordillo <frangor@gmail.com>  Fri, 11 Jul 2011 12:21:49 +0200
+
 libbuddy (0.1.0-1) unstable; urgency=low
 
   * Initial release
