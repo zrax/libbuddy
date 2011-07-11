@@ -119,6 +119,14 @@ void buddy_activate(struct buddy *bd);
 void buddy_state(struct buddy *bd,
 		enum heart h, enum light l, enum wing w, enum body b);
 
+
+/**
+ * Reset the state of the actived i-Buddy devices specified on buddy array.
+ *
+ * @param bd Buddy array.
+ */
+void buddy_reset(struct buddy *bd);
+
 /**
  * Disable a devices specified.
  *
