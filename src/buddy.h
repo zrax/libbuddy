@@ -63,16 +63,18 @@ enum light{
  * Defines the position of the wings.
  */
 enum wing{
-	WING_DOWN = 1,
-	WING_UP = 2
+	WING_STOP,
+	WING_DOWN,
+	WING_UP
 };
 
 /**
  * Defines the position of the boddy.
  */
 enum body{
-	BODY_RIGHT = 1,
-	BODY_LEFT = 2
+	BODY_STOP,
+	BODY_RIGHT,
+	BODY_LEFT
 };
 
 /**
