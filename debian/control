@@ -8,16 +8,16 @@ Homepage: http://frangor.github.com/libbuddy/
 #Vcs-Git: git://git.debian.org/collab-maint/libbuddy.git
 #Vcs-Browser: http://git.debian.org/?p=collab-maint/libbuddy.git;a=summary
 
-Package: libbuddy-dev
+Package: libbuddy1-dev
 Section: libdevel
 Architecture: any
-Depends: libbuddy (= ${binary:Version}), libusb-dev
-Description: C library for manage i-Buddy devices.
- C library for manage i-Buddy devices.
+Depends: libbuddy1 (= ${binary:Version}), libusb-dev
+Description: C library for manage i-Buddy devices (development files).
+ C library and headers for manage i-Buddy devices on Linux.
 
-Package: libbuddy
+Package: libbuddy1
 Section: libs
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, libusb-0.1-4
 Description: C library for manage i-Buddy devices.
- C library for manage i-Buddy devices.
+ C library for manage i-Buddy devices on Linux.
