@@ -1,3 +1,12 @@
+Version 0.1.2
+ - Fix some Debian stuff.
+
+Version 0.1.1
+
+ - Added WING_STOP and BODY_STOP.
+ - Added buddy_reset function.
+
 Version 0.1.0
 
  - simple lib for manage i-Buddy gadgets.
+
