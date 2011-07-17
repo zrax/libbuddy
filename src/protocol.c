@@ -35,8 +35,8 @@ void buddy_msg(struct usb_dev_handle *udev, unsigned char msg)
 				0x00, 0x40, 0x02, 0xFF};
 	header[7] = msg;
 	
-	usb_control_msg(udev, 0x21, 0x09, 0x02, 0x01, setup,
+	usb_control_msg(udev, 0x21, 0x09, 0x02, 0x01, (char *) setup,
 			sizeof(setup), 0);
-	usb_control_msg(udev, 0x21, 0x09, 0x02, 0x01, header,
+	usb_control_msg(udev, 0x21, 0x09, 0x02, 0x01, (char *) header,
 			sizeof(header), 0);
 }
