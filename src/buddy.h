@@ -31,11 +31,7 @@
 /**
  * Array of I-Buddy devices.
  */
-typedef struct buddy{
-	struct usb_device *dev;
-	struct usb_dev_handle *udev;
-	struct buddy *next;
-}buddy;
+typedef void buddy_t;
 
 /**
  * Define the state of the heart.
@@ -83,69 +79,69 @@ enum body{
  *
  * @see buddy_free
  */
-struct buddy * buddy_init();
+struct buddy_t* buddy_init();
 
 /**
  * Count the number of I-Buddy devices on a buddy array.
  *
- * @param bd Buddy array.
+ * @param buddy Buddy array.
  * @return Number of devices.
  */
-int buddy_count(struct buddy *bd);
+int buddy_count(struct buddy_t *buddy);
 
 /**
  * Enables all devices specified in the buddy array.
  *
- * @param bd Buddy array.
+ * @param buddy Buddy array.
  */
-void buddy_activate_all(struct buddy *bd);
+void buddy_activate_all(struct buddy_t *buddy);
 
 /**
  * Enables a device specified.
  *
- * @param bd Buddy.
+ * @param buddy Buddy.
  */
-void buddy_activate(struct buddy *bd);
+void buddy_activate(struct buddy_t *buddy);
 
 /**
  * Change the state of the actived i-Buddy devices specified on buddy array.
  *
- * @param bd Buddy array.
+ * @param buddy Buddy array.
  * @param h State of the heart.
  * @param l Color of the light.
  * @param w Position of the wings.
  * @param b Position of the boddy.
  */
-void buddy_state(struct buddy *bd,
+void buddy_state(struct buddy_t *buddy,
 		enum heart h, enum light l, enum wing w, enum body b);
 
 
 /**
  * Reset the state of the actived i-Buddy devices specified on buddy array.
  *
- * @param bd Buddy array.
+ * @param buddy Buddy array.
  */
-void buddy_reset(struct buddy *bd);
+void buddy_reset(struct buddy_t *buddy);
 
 /**
  * Disable a devices specified.
  *
- * @param bd Buddy.
+ * @param buddy Buddy.
  */
-void buddy_deactivate(struct buddy *bd);
+void buddy_deactivate(struct buddy_t *buddy);
 
 /**
  * Disable all devices specified in the buddy array.
  *
- * @param bd Buddy array.
+ * @param buddy Buddy array.
  */
-void buddy_deactivate_all(struct buddy *bd);
+void buddy_deactivate_all(struct buddy_t *buddy);
 
 /**
  * Completely free resources allocated of a buddy array.
  *
- * @param bd Buddy array.
+ * @param buddy Buddy array.
  */
-void buddy_free(struct buddy *bd);
+void buddy_free(struct buddy_t *buddy);
 
 #endif

@@ -24,12 +24,18 @@
 #include "buddy.h"
 #include "protocol.h"
 
-struct buddy * buddy_init()
+typedef struct buddy_tp {
+	struct usb_device *dev;
+	struct usb_dev_handle *udev;
+	struct buddy_tp *next;
+}buddy_tp;
+
+struct buddy_t* buddy_init()
 {
 	struct usb_bus *busses;
 	struct usb_bus *bus;
 	struct usb_device *dev;
-	struct buddy *bd, *new, *aux;
+	struct buddy_tp *bd, *new, *aux;
 
 	bd = NULL;
 
@@ -43,7 +49,7 @@ struct buddy * buddy_init()
     		for (dev = bus->devices; dev; dev = dev->next) {
 			if (dev->descriptor.idVendor != 4400)
 				continue;
-			new = (struct buddy *) malloc(sizeof (struct buddy));
+			new = (struct buddy_tp *) malloc(sizeof (struct buddy_tp));
 			new->dev = dev;
 			new->udev = NULL;
 			new->next = NULL;
@@ -63,24 +69,26 @@ struct buddy * buddy_init()
 		}
 	}
 
-	return bd;
+	return (buddy_t*) bd;
 }
 
-void buddy_free(struct buddy *bd)
+void buddy_free(struct buddy_t *buddy)
 {
+	buddy_tp* bd = (buddy_tp*) buddy;
 	if (bd == NULL)
 		return;
 
 	if (bd->next != NULL)
-		buddy_free(bd->next);
+		buddy_free((buddy_t*) bd->next);
 
-	buddy_deactivate(bd);
+	buddy_deactivate((buddy_t*) bd);
 	free(bd);
 }
 
-int buddy_count(struct buddy *bd)
+int buddy_count(struct buddy_t *buddy)
 {
-	struct buddy *aux;
+	buddy_tp* bd = (buddy_tp*) buddy;
+	struct buddy_tp *aux;
 	int count;
 
 	count = 0;
@@ -91,8 +99,9 @@ int buddy_count(struct buddy *bd)
 	return count;
 }
 
-void buddy_activate(struct buddy *bd)
+void buddy_activate(struct buddy_t *buddy)
 {
+	buddy_tp* bd = (buddy_tp*) buddy;
 	if(bd->udev != NULL)
 		return;
 
@@ -106,40 +115,44 @@ void buddy_activate(struct buddy *bd)
 			bd->dev->config->interface->altsetting->bAlternateSetting);
 }
 
-void buddy_deactivate(struct buddy *bd)
+void buddy_deactivate(struct buddy_t *buddy)
 {
+	buddy_tp* bd = (buddy_tp*) buddy;
 	if(bd->udev == NULL)
 		return;
 
-	usb_close(bd->udev);
+	usb_close((buddy_t*) bd->udev);
 	bd->udev = NULL;
 }
 
-void buddy_activate_all(struct buddy *bd)
+void buddy_activate_all(struct buddy_t *buddy)
 {
+	buddy_tp* bd = (buddy_tp*) buddy;
 	if(bd == NULL)
 		return;
 
-	buddy_activate_all(bd->next);
-	buddy_activate(bd);
+	buddy_activate_all((buddy_t*) bd->next);
+	buddy_activate((buddy_t*) bd);
 }
 
-void buddy_deactivate_all(struct buddy *bd)
+void buddy_deactivate_all(struct buddy_t *buddy)
 {
+	buddy_tp* bd = (buddy_tp*) buddy;
 	if(bd == NULL)
 		return;
 
-	buddy_deactivate_all(bd->next);
-	buddy_deactivate(bd);
+	buddy_deactivate_all((buddy_t*) bd->next);
+	buddy_deactivate((buddy_t*) bd);
 }
 
-void buddy_state(struct buddy *bd,
+void buddy_state(struct buddy_t *buddy,
 		enum heart h, enum light l, enum wing w, enum body b)
 {
+	buddy_tp* bd = (buddy_tp*) buddy;
 	if(bd == NULL)
 		return;
 	
-	buddy_state(bd->next, h, l, w, b);
+	buddy_state((buddy_t*) bd->next, h, l, w, b);
 
 	unsigned char msg;
 	
@@ -152,8 +165,9 @@ void buddy_state(struct buddy *bd,
 	buddy_msg(bd->udev, msg);
 }
 
-void buddy_reset(struct buddy *bd)
+void buddy_reset(struct buddy_t *buddy)
 {
+	buddy_tp* bd = (buddy_tp*) buddy;
 	if(bd == NULL)
 		return;
 
