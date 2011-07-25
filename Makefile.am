@@ -1,4 +1,4 @@
-EXTRA_DIST = doxygen.cfg doc/html debian/* debian/source/*
+EXTRA_DIST = doxygen.cfg doc/* debian/* debian/source/*
 
 CLEANFILES = *~
 
