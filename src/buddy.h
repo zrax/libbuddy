@@ -100,8 +100,10 @@ void buddy_activate_all(struct buddy_t *buddy);
  * Enables a device specified.
  *
  * @param buddy Buddy.
+ * @param device Device number to enable (0 the first device).
+ * @return 0 to indicate proper operation.
  */
-void buddy_activate(struct buddy_t *buddy);
+int buddy_activate(struct buddy_t *buddy, int device);
 
 /**
  * Change the state of the actived i-Buddy devices specified on buddy array.
@@ -127,8 +129,10 @@ void buddy_reset(struct buddy_t *buddy);
  * Disable a devices specified.
  *
  * @param buddy Buddy.
+ * @param device Device number to deactivate (0 the first device).
+ * @return 0 to indicate proper operation.
  */
-void buddy_deactivate(struct buddy_t *buddy);
+int buddy_deactivate(struct buddy_t *buddy, int device);
 
 /**
  * Disable all devices specified in the buddy array.

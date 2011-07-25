@@ -30,6 +30,9 @@ typedef struct buddy_tp {
 	struct buddy_tp *next;
 }buddy_tp;
 
+void buddy_act(struct buddy_tp *buddy);
+void buddy_deact(struct buddy_tp *buddy);
+
 struct buddy_t* buddy_init()
 {
 	struct usb_bus *busses;
@@ -81,7 +84,7 @@ void buddy_free(struct buddy_t *buddy)
 	if (bd->next != NULL)
 		buddy_free((buddy_t*) bd->next);
 
-	buddy_deactivate((buddy_t*) bd);
+	buddy_deact((buddy_t*) bd);
 	free(bd);
 }
 
@@ -99,7 +102,7 @@ int buddy_count(struct buddy_t *buddy)
 	return count;
 }
 
-void buddy_activate(struct buddy_t *buddy)
+void buddy_act(struct buddy_tp *buddy)
 {
 	buddy_tp* bd = (buddy_tp*) buddy;
 	if(bd->udev != NULL)
@@ -115,7 +118,7 @@ void buddy_activate(struct buddy_t *buddy)
 			bd->dev->config->interface->altsetting->bAlternateSetting);
 }
 
-void buddy_deactivate(struct buddy_t *buddy)
+void buddy_deact(struct buddy_tp *buddy)
 {
 	buddy_tp* bd = (buddy_tp*) buddy;
 	if(bd->udev == NULL)
@@ -125,6 +128,20 @@ void buddy_deactivate(struct buddy_t *buddy)
 	bd->udev = NULL;
 }
 
+int buddy_activate(struct buddy_t *buddy, int device)
+{
+	buddy_tp* bd = (buddy_tp*) buddy;
+
+	if (device < 0)
+		return -1;
+	else if (device == 0)
+	{
+		buddy_act(bd);
+		return 0;
+	} else
+		return buddy_activate((buddy_t*) bd->next, device--);
+}
+
 void buddy_activate_all(struct buddy_t *buddy)
 {
 	buddy_tp* bd = (buddy_tp*) buddy;
@@ -132,7 +149,21 @@ void buddy_activate_all(struct buddy_t *buddy)
 		return;
 
 	buddy_activate_all((buddy_t*) bd->next);
-	buddy_activate((buddy_t*) bd);
+	buddy_act(bd);
+}
+
+int buddy_deactivate(struct buddy_t *buddy, int device)
+{
+	buddy_tp* bd = (buddy_tp*) buddy;
+
+	if (device < 0)
+		return -1;
+	else if (device == 0)
+	{
+		buddy_deact(bd);
+		return 0;
+	} else
+		return buddy_deactivate((buddy_t*) bd->next, device--);
 }
 
 void buddy_deactivate_all(struct buddy_t *buddy)
@@ -142,7 +173,7 @@ void buddy_deactivate_all(struct buddy_t *buddy)
 		return;
 
 	buddy_deactivate_all((buddy_t*) bd->next);
-	buddy_deactivate((buddy_t*) bd);
+	buddy_deact(bd);
 }
 
 void buddy_state(struct buddy_t *buddy,
