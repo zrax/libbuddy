@@ -2,7 +2,7 @@
 
 /*      buddy.c
  *
- *      Copyright 2010 Francesc Gordillo <frangor+dev@gmail.com>
+ *      Copyright 2011 Francesc Gordillo i Cortínez <frangor@gmx.es>
  *
  *      This program is free software; you can redistribute it and/or modify
  *      it under the terms of the GNU General Public License as published by
