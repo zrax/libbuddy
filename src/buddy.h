@@ -71,7 +71,7 @@ typedef unsigned int buddy_position;
 #define BUDDY_LEFT 2
 
 /**
- * Errors
+ * Error handling.
  */
 #define BUDDY_CORRECT 0
 #define BUDDY_ERROR_USB -1
@@ -86,7 +86,7 @@ typedef unsigned int buddy_position;
  * of all I-Buddy devices. You need to activate the devices you want to work.
  * 
  * @param buddy Buddy array.
- * @return buddy error.
+ * @return Error handling.
  * @see buddy_free
  */
 int buddy_init(buddy_t *buddy);
@@ -103,6 +103,7 @@ int buddy_count(buddy_t *buddy);
  * Enables all devices specified in the buddy array.
  *
  * @param buddy Buddy array.
+ * @return Error handling.
  */
 int buddy_activate_all(buddy_t *buddy);
 
@@ -111,7 +112,7 @@ int buddy_activate_all(buddy_t *buddy);
  *
  * @param buddy Buddy.
  * @param device Device number to enable (0 the first device).
- * @return 0 to indicate proper operation.
+ * @return Error handling.
  */
 int buddy_activate(buddy_t *buddy, int device);
 
@@ -119,10 +120,11 @@ int buddy_activate(buddy_t *buddy, int device);
  * Change the state of the actived i-Buddy devices specified on buddy array.
  *
  * @param buddy Buddy array.
- * @param hight State of the heart.
+ * @param heart State of the heart.
  * @param light Color of the light.
  * @param wing Position of the wings.
  * @param position Position of the boddy.
+ * @return Error handling.
  */
 int buddy_state(buddy_t *buddy,
 		buddy_heart heart,
@@ -151,6 +153,7 @@ int buddy_deactivate(buddy_t *buddy, int device);
  * Disable all devices specified in the buddy array.
  *
  * @param buddy Buddy array.
+ * @return Error handling.
  */
 int buddy_deactivate_all(buddy_t *buddy);
 
