@@ -71,12 +71,25 @@ typedef unsigned int buddy_position;
 #define BUDDY_LEFT 2
 
 /**
+ * Errors
+ */
+#define BUDDY_CORRECT 0
+#define BUDDY_ERROR_USB -1
+#define BUDDY_ERROR_DEVICE_OUT -2
+#define BUDDY_ERROR_HEART_OUT -3
+#define BUDDY_ERROR_LIGHT_OUT -3
+#define BUDDY_ERROR_WING_OUT -4
+#define BUDDY_ERROR_POSITION_OUT -5
+
+/**
  * Allocate and init a buddy array. The buddy array holds usb information
  * of all I-Buddy devices. You need to activate the devices you want to work.
- *
+ * 
+ * @param buddy Buddy array.
+ * @return buddy error.
  * @see buddy_free
  */
-struct buddy_t* buddy_init();
+int buddy_init(buddy_t *buddy);
 
 /**
  * Count the number of I-Buddy devices on a buddy array.
@@ -84,14 +97,14 @@ struct buddy_t* buddy_init();
  * @param buddy Buddy array.
  * @return Number of devices.
  */
-int buddy_count(struct buddy_t *buddy);
+int buddy_count(buddy_t *buddy);
 
 /**
  * Enables all devices specified in the buddy array.
  *
  * @param buddy Buddy array.
  */
-void buddy_activate_all(struct buddy_t *buddy);
+int buddy_activate_all(buddy_t *buddy);
 
 /**
  * Enables a device specified.
@@ -100,7 +113,7 @@ void buddy_activate_all(struct buddy_t *buddy);
  * @param device Device number to enable (0 the first device).
  * @return 0 to indicate proper operation.
  */
-int buddy_activate(struct buddy_t *buddy, int device);
+int buddy_activate(buddy_t *buddy, int device);
 
 /**
  * Change the state of the actived i-Buddy devices specified on buddy array.
@@ -111,7 +124,7 @@ int buddy_activate(struct buddy_t *buddy, int device);
  * @param wing Position of the wings.
  * @param position Position of the boddy.
  */
-void buddy_state(struct buddy_t *buddy,
+int buddy_state(buddy_t *buddy,
 		buddy_heart heart,
 		buddy_light light,
 		buddy_wing wing,
@@ -123,7 +136,7 @@ void buddy_state(struct buddy_t *buddy,
  *
  * @param buddy Buddy array.
  */
-void buddy_reset(struct buddy_t *buddy);
+void buddy_reset(buddy_t *buddy);
 
 /**
  * Disable a devices specified.
@@ -132,20 +145,20 @@ void buddy_reset(struct buddy_t *buddy);
  * @param device Device number to deactivate (0 the first device).
  * @return 0 to indicate proper operation.
  */
-int buddy_deactivate(struct buddy_t *buddy, int device);
+int buddy_deactivate(buddy_t *buddy, int device);
 
 /**
  * Disable all devices specified in the buddy array.
  *
  * @param buddy Buddy array.
  */
-void buddy_deactivate_all(struct buddy_t *buddy);
+int buddy_deactivate_all(buddy_t *buddy);
 
 /**
  * Completely free resources allocated of a buddy array.
  *
  * @param buddy Buddy array.
  */
-void buddy_free(struct buddy_t *buddy);
+void buddy_free(buddy_t *buddy);
 
 #endif
