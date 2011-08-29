@@ -20,13 +20,13 @@ int main(void)
 	/**
 	 * Changes the states of all i-Buddy gadgets every second.
 	 */
-	buddy_state(buddy, HEART_OFF, LIGHT_BLUE, WING_DOWN, BODY_STOP);
+	buddy_state(buddy, BUDDY_OFF, BUDDY_BLUE, BUDDY_DOWN, BUDDY_OFF);
 	sleep(1);
-	buddy_state(buddy, HEART_ON, LIGHT_GREEN, WING_STOP, BODY_RIGHT);
+	buddy_state(buddy, BUDDY_ON, BUDDY_GREEN, BUDDY_OFF, BUDDY_RIGHT);
 	sleep(1);
-	buddy_state(buddy, HEART_OFF, LIGHT_RED, WING_STOP, BODY_LEFT);
+	buddy_state(buddy, BUDDY_OFF, BUDDY_RED, BUDDY_OFF, BUDDY_LEFT);
 	sleep(1);
-	buddy_state(buddy, HEART_ON, LIGHT_YELLOW, WING_UP, BODY_RIGHT);
+	buddy_state(buddy, BUDDY_ON, BUDDY_YELLOW, BUDDY_UP, BUDDY_RIGHT);
 	sleep(1);
 
 	/**
