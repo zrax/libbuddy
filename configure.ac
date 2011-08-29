@@ -95,6 +95,7 @@ dnl }}}
 dnl {{{ output
 AC_CONFIG_HEADER(config.h)
 AC_OUTPUT(
+	  	  README
 		  Makefile
 		  src/Makefile
 		  pkg-config/Makefile
