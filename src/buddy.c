@@ -177,21 +177,24 @@ void buddy_deactivate_all(struct buddy_t *buddy)
 }
 
 void buddy_state(struct buddy_t *buddy,
-		enum heart h, enum light l, enum wing w, enum body b)
+		buddy_heart heart, 
+		buddy_light light,
+		buddy_wing wing,
+		buddy_position position)
 {
 	buddy_tp* bd = (buddy_tp*) buddy;
 	if(bd == NULL)
 		return;
 	
-	buddy_state((buddy_t*) bd->next, h, l, w, b);
+	buddy_state((buddy_t*) bd->next, heart, light, wing, position);
 
 	unsigned char msg;
 	
 	msg = 0xFF;
-	msg ^= h << 7;
-	msg ^= l << 4;
-	msg ^= w << 2;
-	msg ^= b;
+	msg ^= heart << 7;
+	msg ^= light << 4;
+	msg ^= wing << 2;
+	msg ^= position;
 
 	buddy_msg(bd->udev, msg);
 }

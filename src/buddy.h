@@ -36,42 +36,39 @@ typedef void buddy_t;
 /**
  * Define the state of the heart.
  */
-enum heart{
-	HEART_OFF,
-	HEART_ON
-};
+typedef unsigned int buddy_heart;
+
+#define	BUDDY_OFF 0
+#define	BUDDY_ON 1
 
 /**
  * Defines the color of the light.
  */
-enum light{
-	LIGHT_OFF,
-	LIGHT_RED,
-	LIGHT_GREEN,
-	LIGHT_YELLOW,
-	LIGHT_BLUE,
-	LIGHT_MAGENTA,
-	LIGHT_CYAN,
-	LIGHT_WHITE
-};
+typedef unsigned int buddy_light;
+
+#define BUDDY_RED 1
+#define BUDDY_GREEN 2
+#define BUDDY_YELLOW 3
+#define BUDDY_BLUE 4
+#define BUDDY_MAGENTA 5
+#define BUDDY_CYAN 6
+#define BUDDY_WHITE 7
 
 /**
  * Defines the position of the wings.
  */
-enum wing{
-	WING_STOP,
-	WING_DOWN,
-	WING_UP
-};
+typedef unsigned int buddy_wing;
+ 
+#define BUDDY_DOWN 1
+#define	BUDDY_UP 2
 
 /**
- * Defines the position of the boddy.
+ * Defines the position of the body.
  */
-enum body{
-	BODY_STOP,
-	BODY_RIGHT,
-	BODY_LEFT
-};
+typedef unsigned int buddy_position;
+
+#define BUDDY_RIGHT 1
+#define BUDDY_LEFT 2
 
 /**
  * Allocate and init a buddy array. The buddy array holds usb information
@@ -109,13 +106,16 @@ int buddy_activate(struct buddy_t *buddy, int device);
  * Change the state of the actived i-Buddy devices specified on buddy array.
  *
  * @param buddy Buddy array.
- * @param h State of the heart.
- * @param l Color of the light.
- * @param w Position of the wings.
- * @param b Position of the boddy.
+ * @param hight State of the heart.
+ * @param light Color of the light.
+ * @param wing Position of the wings.
+ * @param position Position of the boddy.
  */
 void buddy_state(struct buddy_t *buddy,
-		enum heart h, enum light l, enum wing w, enum body b);
+		buddy_heart heart,
+		buddy_light light,
+		buddy_wing wing,
+		buddy_position position);
 
 
 /**
