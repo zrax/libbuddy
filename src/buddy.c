@@ -33,7 +33,7 @@ typedef struct buddy_tp {
 int buddy_act(struct buddy_tp *buddy);
 int buddy_deact(struct buddy_tp *buddy);
 
-int buddy_init(buddy_t *buddy)
+buddy_t* buddy_init()
 {
 	struct usb_bus *busses;
 	struct usb_bus *bus;
@@ -72,8 +72,7 @@ int buddy_init(buddy_t *buddy)
 		}
 	}
 
-	buddy = (buddy_t*) bd;
-	return BUDDY_CORRECT;
+	return (buddy_t*) bd;
 }
 
 void buddy_free(buddy_t *buddy)

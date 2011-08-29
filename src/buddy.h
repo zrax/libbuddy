@@ -85,11 +85,10 @@ typedef unsigned int buddy_position;
  * Allocate and init a buddy array. The buddy array holds usb information
  * of all I-Buddy devices. You need to activate the devices you want to work.
  * 
- * @param buddy Buddy array.
- * @return Error handling.
+ * @return Buddy array.
  * @see buddy_free
  */
-int buddy_init(buddy_t *buddy);
+buddy_t* buddy_init();
 
 /**
  * Count the number of I-Buddy devices on a buddy array.
