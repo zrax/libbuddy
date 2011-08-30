@@ -109,10 +109,8 @@ int buddy_act(struct buddy_tp *buddy)
 		return BUDDY_CORRECT;
 
 	bd->udev = usb_open(bd->dev);
-	if (! usb_detach_kernel_driver_np(bd->udev, 0))
-		return BUDDY_ERROR_USB;
-	if (! usb_detach_kernel_driver_np(bd->udev, 1))
-		return BUDDY_ERROR_USB;
+	usb_detach_kernel_driver_np(bd->udev, 0);
+	usb_detach_kernel_driver_np(bd->udev, 1);
 	if (! usb_set_configuration(bd->udev, bd->dev->config->bConfigurationValue))
 		return BUDDY_ERROR_USB;
 	if (! usb_claim_interface(bd->udev,
