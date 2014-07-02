@@ -147,7 +147,7 @@ int buddy_activate(buddy_t *buddy, int device)
 		buddy_act(bd);
 		return BUDDY_CORRECT;
 	} else
-		return buddy_activate((buddy_t*) bd->next, device--);
+		return buddy_activate((buddy_t*) bd->next, --device);
 }
 
 int buddy_activate_all(buddy_t *buddy)
