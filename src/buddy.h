@@ -28,6 +28,10 @@
 #ifndef BUDDY_H
 #define BUDDY_H 1
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /**
  * Array of I-Buddy devices.
  */
@@ -162,5 +166,9 @@ int buddy_deactivate_all(buddy_t *buddy);
  * @param buddy Buddy array.
  */
 void buddy_free(buddy_t *buddy);
+
+#ifdef __cplusplus
+} /* extern "C" */
+#endif
 
 #endif
