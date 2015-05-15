@@ -20,72 +20,86 @@
  *      MA 02110-1301, USA.
  */
 
-#include <usb.h>
+#include <stdlib.h>
+#include <libusb.h>
 #include "buddy.h"
 #include "protocol.h"
 
 typedef struct buddy_tp {
-	struct usb_device *dev;
-	struct usb_dev_handle *udev;
+	libusb_context *ctx;
+	libusb_device *dev;
+	libusb_device_handle *udev;
 	struct buddy_tp *next;
-}buddy_tp;
+} buddy_tp;
 
-int buddy_act(struct buddy_tp *buddy);
-int buddy_deact(struct buddy_tp *buddy);
+static int buddy_act(struct buddy_tp *buddy);
+static int buddy_deact(struct buddy_tp *buddy);
 
 buddy_t* buddy_init()
 {
-	struct usb_bus *busses;
-	struct usb_bus *bus;
-	struct usb_device *dev;
+	libusb_context *ctx;
+	libusb_device *dev, **devices;
+	struct libusb_device_descriptor desc;
 	struct buddy_tp *bd, *new, *aux;
+	ssize_t devcnt, i;
 
 	bd = NULL;
 
-	usb_init();
-	usb_find_busses();
-	usb_find_devices();
-	
-	busses = usb_get_busses();
+	if (libusb_init(&ctx) != 0)
+		return NULL;
 
-    	for (bus = busses; bus; bus = bus->next) {
-    		for (dev = bus->devices; dev; dev = dev->next) {
-			if (dev->descriptor.idVendor != 4400)
-				continue;
-			new = (struct buddy_tp *) malloc(sizeof (struct buddy_tp));
-			new->dev = dev;
-			new->udev = NULL;
-			new->next = NULL;
+	devcnt = libusb_get_device_list(ctx, &devices);
 
-			if (bd == NULL)
-			{
-				bd = new;
-				continue;
-			}
+	for (i = 0; i < devcnt; ++i) {
+		dev = devices[i];
+		libusb_get_device_descriptor(dev, &desc);
+		if (desc.idVendor != 4400)
+			continue;
+		new = (struct buddy_tp *) malloc(sizeof (struct buddy_tp));
+		new->ctx = ctx;
+		new->dev = libusb_ref_device(dev);
+		new->udev = NULL;
+		new->next = NULL;
 
-			aux = bd;
-			
-			while (aux->next != NULL)
-				aux = aux->next;
-			
-			aux->next = new;
+		if (bd == NULL)
+		{
+			bd = new;
+			continue;
 		}
+
+		aux = bd;
+
+		while (aux->next != NULL)
+			aux = aux->next;
+
+		aux->next = new;
 	}
+
+	libusb_free_device_list(devices, 1);
 
 	return (buddy_t*) bd;
 }
 
+static void buddy_free_r(buddy_tp *bd)
+{
+	if (bd->next != NULL)
+		buddy_free_r(bd->next);
+
+	buddy_deact((buddy_t*) bd);
+	libusb_unref_device(bd->dev);
+	free(bd);
+}
+
 void buddy_free(buddy_t *buddy)
 {
-	buddy_tp* bd = (buddy_tp*) buddy;
+	buddy_tp *bd = (buddy_tp*) buddy;
+	libusb_context *ctx;
 	if (bd == NULL)
 		return;
 
-	if (bd->next != NULL)
-		buddy_free((buddy_t*) bd->next);
-
-	buddy_deact((buddy_t*) bd);
-	free(bd);
+	ctx = bd->ctx;
+	buddy_free_r(bd);
+	libusb_exit(ctx);
 }
 
 int buddy_count(buddy_t *buddy)
@@ -105,19 +119,29 @@ int buddy_count(buddy_t *buddy)
 int buddy_act(struct buddy_tp *buddy)
 {
 	buddy_tp* bd = (buddy_tp*) buddy;
+	int configValue;
+	struct libusb_config_descriptor *config;
+
 	if(bd->udev != NULL)
 		return BUDDY_CORRECT;
 
-	bd->udev = usb_open(bd->dev);
-	usb_detach_kernel_driver_np(bd->udev, 0);
-	usb_detach_kernel_driver_np(bd->udev, 1);
-	if (! usb_set_configuration(bd->udev, bd->dev->config->bConfigurationValue))
+	if (libusb_open(bd->dev, &bd->udev) != 0)
 		return BUDDY_ERROR_USB;
-	if (! usb_claim_interface(bd->udev,
-			bd->dev->config->interface->altsetting->bInterfaceNumber))
+
+	libusb_detach_kernel_driver(bd->udev, 0);
+	libusb_detach_kernel_driver(bd->udev, 1);
+	if (! libusb_get_configuration(bd->udev, &configValue))
 		return BUDDY_ERROR_USB;
-	if (! usb_set_altinterface(bd->udev,
-			bd->dev->config->interface->altsetting->bAlternateSetting))
+	if (! libusb_set_configuration(bd->udev, configValue))
+		return BUDDY_ERROR_USB;
+
+	libusb_get_active_config_descriptor(bd->dev, &config);
+	if (! libusb_claim_interface(bd->udev,
+			config->interface->altsetting->bInterfaceNumber))
+		return BUDDY_ERROR_USB;
+	if (! libusb_set_interface_alt_setting(bd->udev,
+			config->interface->altsetting->bInterfaceNumber,
+			config->interface->altsetting->bAlternateSetting))
 		return BUDDY_ERROR_USB;
 	
 	return BUDDY_CORRECT;
@@ -126,11 +150,16 @@ int buddy_act(struct buddy_tp *buddy)
 int buddy_deact(struct buddy_tp *buddy)
 {
 	buddy_tp* bd = (buddy_tp*) buddy;
+	struct libusb_config_descriptor *config;
+
 	if(bd->udev == NULL)
 		return BUDDY_CORRECT;
 
-	if(! usb_close((buddy_t*) bd->udev))
+	libusb_get_active_config_descriptor(bd->dev, &config);
+	if(! libusb_release_interface(bd->udev,
+			config->interface->altsetting->bInterfaceNumber))
 		return BUDDY_ERROR_USB;
+	libusb_close(bd->udev);
 	bd->udev = NULL;
 
 	return BUDDY_CORRECT;

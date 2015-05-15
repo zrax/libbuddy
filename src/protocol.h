@@ -23,6 +23,6 @@
 #ifndef PROTOCOL_H
 #define PROTOCOL_H 1
 
-void buddy_msg(struct usb_dev_handle *udev, unsigned char msg);
+void buddy_msg(libusb_device_handle *udev, unsigned char msg);
 
 #endif
