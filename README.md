@@ -20,10 +20,10 @@ and add your user to group _ibuddy_:
 
     sudo gpasswd -a $USER ibuddy
 
-_tested on Debian 6.0 (Squeeze)_
+_tested on Debian 6.0 (Squeeze) and Red Hat Enterprise 6.6_
 
 Dependencies
 ============
 
- * libusb-0.1
+ * libusb-1.0
 
