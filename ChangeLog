@@ -1,3 +1,7 @@
+Version 0.3.2
+
+ - Port to libusb-1.0
+
 Version 0.3.1
 
  - usb_detach_kernel_driver_np fixes.
