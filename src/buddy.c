@@ -169,7 +169,7 @@ int buddy_activate(buddy_t *buddy, int device)
 {
 	buddy_tp* bd = (buddy_tp*) buddy;
 
-	if (device < 0)
+	if (device < 0 || buddy == NULL)
 		return BUDDY_ERROR_DEVICE_OUT;
 	else if (device == 0)
 	{
@@ -195,7 +195,7 @@ int buddy_deactivate(buddy_t *buddy, int device)
 {
 	buddy_tp* bd = (buddy_tp*) buddy;
 
-	if (device < 0)
+	if (device < 0 || buddy == NULL)
 		return BUDDY_ERROR_DEVICE_OUT;
 	else if (device == 0)
 	{
