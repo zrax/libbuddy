@@ -35,7 +35,7 @@ typedef struct buddy_tp {
 static int buddy_act(struct buddy_tp *buddy);
 static int buddy_deact(struct buddy_tp *buddy);
 
-buddy_t* buddy_init()
+buddy_t* buddy_init(void)
 {
 	libusb_context *ctx;
 	libusb_device *dev, **devices;

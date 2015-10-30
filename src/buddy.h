@@ -92,7 +92,7 @@ typedef unsigned int buddy_position;
  * @return Buddy array.
  * @see buddy_free
  */
-buddy_t* buddy_init();
+buddy_t* buddy_init(void);
 
 /**
  * Count the number of I-Buddy devices on a buddy array.
