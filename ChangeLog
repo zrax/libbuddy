@@ -1,6 +1,7 @@
 Version 0.3.2
 
  - Port to libusb-1.0
+ - Detect device ID out of range in buddy_(de)activate
 
 Version 0.3.1
 
