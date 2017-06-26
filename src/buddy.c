@@ -224,16 +224,23 @@ int buddy_deactivate_all(buddy_t *buddy)
 	return buddy_deactivate_all((buddy_t*) bd->next);
 }
 
-int buddy_state(buddy_t *buddy,
-		buddy_heart heart, 
-		buddy_light light,
-		buddy_wing wing,
-		buddy_position position)
+static int buddy_state_r(buddy_t *buddy, unsigned char msg)
 {
 	buddy_tp* bd = (buddy_tp*) buddy;
 	if (bd == NULL)
 		return BUDDY_CORRECT;
 	
+	buddy_msg(bd->udev, msg);
+
+	return buddy_state_r((buddy_t*) bd->next, msg);
+}
+
+int buddy_state(buddy_t *buddy,
+		buddy_heart heart,
+		buddy_light light,
+		buddy_wing wing,
+		buddy_position position)
+{
 	if (heart < 0 || heart > 1)
 		return BUDDY_ERROR_HEART_OUT;
 
@@ -246,17 +253,13 @@ int buddy_state(buddy_t *buddy,
 	if (position < 0 || position > 2)
 		return BUDDY_ERROR_POSITION_OUT;
 
-	unsigned char msg;
-	
-	msg = 0xFF;
+	unsigned char msg = 0xFF;
 	msg ^= heart << 7;
 	msg ^= light << 4;
 	msg ^= wing << 2;
 	msg ^= position;
 
-	buddy_msg(bd->udev, msg);
-
-	return buddy_state((buddy_t*) bd->next, heart, light, wing, position);
+	return buddy_state_r(buddy, msg);
 }
 
 void buddy_reset(buddy_t *buddy)
