@@ -1,3 +1,8 @@
+Version 0.3.3
+
+ - Fix for "usbfs: process NNNN (myapp) did not claim interface 1 before use".
+ - Fix buddy_reset not resetting all connected devices.
+
 Version 0.3.2
 
  - Port to libusb-1.0

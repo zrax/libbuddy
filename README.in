@@ -20,7 +20,7 @@ and add your user to group ibuddy:
 
     sudo gpasswd -a $USER ibuddy
 
-tested on Debian 6.0 (Squeeze) and Red Hat Enterprise 6.6
+tested on Ubuntu 16.04 LTS, Debian 6.0 (Squeeze), and Red Hat Enterprise 6
 
 Dependencies
 ============
