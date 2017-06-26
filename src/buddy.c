@@ -269,5 +269,6 @@ void buddy_reset(buddy_t *buddy)
 		return;
 
 	buddy_msg(bd->udev, 0xFF);
+	buddy_reset((buddy_t*) bd->next);
 }
 
